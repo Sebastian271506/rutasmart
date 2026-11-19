@@ -1,0 +1,21 @@
+{
+  "name": "rutasmart-platform",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w @rutasmart/api\" \"npm run dev -w @rutasmart/web\"",
+    "dev:api": "npm run dev -w @rutasmart/api",
+    "dev:web": "npm run dev -w @rutasmart/web",
+    "build": "npm run build -w @rutasmart/api && npm run build -w @rutasmart/web",
+    "typecheck": "npm run typecheck -w @rutasmart/api && npm run typecheck -w @rutasmart/web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,613 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DomiTrack | Gestión de domicilios</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="login" class="login-container">
+    <div class="login-shell">
+        <aside class="login-showcase">
+            <div class="login-brand">
+                <img src="assets/rutasmart-logo.png" alt="">
+                <span>RutaSmart</span>
+            </div>
+            <div class="login-showcase-copy">
+                <span class="login-kicker"><span></span> OPERACIÓN INTELIGENTE</span>
+                <h2>Tus domicilios.<br>En buenas manos.</h2>
+                <p>Organiza cada pedido, coordina a tu equipo y mantén el control de tus entregas desde un solo lugar.</p>
+                <div class="login-benefits">
+                    <span><b>01</b> Sin comisiones por venta</span>
+                    <span><b>02</b> Tu equipo, tus reglas</span>
+                </div>
+            </div>
+            <div class="login-route-art" aria-hidden="true">
+                <span class="route-node node-start"></span>
+                <span class="route-node node-end"></span>
+                <svg viewBox="0 0 420 150" preserveAspectRatio="none">
+                    <path d="M4 126h92V76h86V28h82v65h70V45h82"></path>
+                </svg>
+                <span class="route-label">Cada entrega cuenta</span>
+            </div>
+            <p class="login-showcase-footer">GESTIÓN DE OPERACIONES Y FLOTAS</p>
+        </aside>
+
+        <div class="login-box">
+            <div class="login-content">
+                <div class="login-form-heading">
+                    <span class="login-form-icon" aria-hidden="true">→</span>
+                    <span class="login-kicker">PORTAL EMPRESARIAL</span>
+                </div>
+                <h1>Bienvenido de nuevo</h1>
+                <p class="login-subtitle">Ingresa tus datos para continuar con la operación.</p>
+
+                <form id="loginForm">
+                    <label for="correo">Correo electrónico</label>
+                    <div class="login-input">
+                        <span class="input-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5zm1.8-.4 6.58 5.2a1 1 0 0 0 1.24 0l6.58-5.2a.7.7 0 0 0-.7-.3h-13a.7.7 0 0 0-.7.3Zm14.4 2.2-5.46 4.31a2.8 2.8 0 0 1-3.48 0L4.8 8.3v9.2c0 .39.31.7.7.7h13a.7.7 0 0 0 .7-.7z"/></svg>
+                        </span>
+                        <input type="email" id="correo" placeholder="nombre@negocio.com" autocomplete="username" required>
+                    </div>
+
+                    <div class="login-label-row">
+                        <label for="password">Contraseña</label>
+                    </div>
+                    <div class="login-input">
+                        <span class="input-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M7 9V7a5 5 0 0 1 10 0v2h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2zm2 0h6V7a3 3 0 0 0-6 0zm-3 2v9h12v-9zm6 2a2 2 0 0 1 1 3.73V19h-2v-2.27A2 2 0 0 1 12 13Z"/></svg>
+                        </span>
+                        <input type="password" id="password" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
+                    </div>
+
+                    <button type="submit">Iniciar sesión <span aria-hidden="true">→</span></button>
+                    <p id="error" class="error" role="alert"></p>
+                </form>
+
+                <details class="demo">
+                    <summary><span>¿Quieres probar la plataforma?</span><b>Ver accesos de demostración <span aria-hidden="true">⌄</span></b></summary>
+                    <div class="demo-content">
+                        <div><b>Administrador</b><span>admin@domitrack.com</span><span>Contraseña: admin123</span></div>
+                        <div><b>Domiciliario</b><span>domiciliario@domitrack.com</span><span>Contraseña: domi123</span></div>
+                    </div>
+                </details>
+                <p class="login-privacy"><span aria-hidden="true">▣</span> Acceso exclusivo para tu negocio</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PANEL ADMINISTRADOR -->
+<section id="adminPanel" class="panel hidden">
+
+    <aside class="sidebar">
+        <div class="brand"><img src="assets/rutasmart-logo.png" alt=""> RutaSmart</div>
+        <p class="company-label">PANEL EMPRESARIAL</p>
+
+        <nav>
+            <button class="active" onclick="mostrarAdmin('inicioAdmin',this)">▦ Panel principal</button>
+            <button onclick="mostrarAdmin('pedidosAdmin',this)">▤ Pedidos</button>
+            <button onclick="mostrarAdmin('registrarAdmin',this)">＋ Registrar pedido</button>
+            <button onclick="mostrarAdmin('domiciliariosAdmin',this)">♙ Domiciliarios</button>
+            <button onclick="mostrarAdmin('reportesAdmin',this)">▥ Reportes</button>
+        </nav>
+
+        <button class="logout" onclick="cerrarSesion()">Cerrar sesión</button>
+    </aside>
+
+    <main class="main-content">
+        <header>
+            <div>
+                <span class="eyebrow">ADMINISTRACIÓN</span>
+                <h2 id="adminTitle">Panel principal</h2>
+            </div>
+            <div class="user-info">
+                <div class="avatar">A</div>
+                Administrador
+            </div>
+        </header>
+
+        <!-- INICIO -->
+        <div id="inicioAdmin" class="admin-section">
+
+            <div class="dashboard-layout">
+                <div class="dashboard-left">
+                    <div class="welcome">
+                        <div>
+                            <span class="eyebrow">CENTRO DE OPERACIONES</span>
+                            <h2>Seguimiento de domicilios</h2>
+                            <p>Resumen de todos los pedidos guardados y la carga actual del equipo.</p>
+                        </div>
+                        <div class="welcome-actions">
+                            <span class="today-chip"><span></span><b id="fechaPanelHoy"></b></span>
+                            <button onclick="mostrarAdmin('registrarAdmin')">＋ Nuevo pedido</button>
+                        </div>
+                    </div>
+
+                    <div id="unassignedAlert" class="priority-alert hidden" role="status">
+                        <span class="alert-icon" aria-hidden="true">!</span>
+                        <div>
+                            <strong><span id="unassignedCount">0</span> pedidos activos sin domiciliario</strong>
+                            <p>Asígnalos para que puedan iniciar su ruta.</p>
+                        </div>
+                        <button type="button" class="button-secondary" onclick="filtrarPedidosSinAsignar()">Revisar pedidos</button>
+                    </div>
+
+                    <div class="cards">
+                        <button type="button" class="card metric-card" data-filter-status="Todos" aria-pressed="true" onclick="filtrarPanel('Todos')">
+                            <span>Total de pedidos</span>
+                            <h2 id="totalPedidos">0</h2>
+                        </button>
+                        <button type="button" class="card metric-card" data-filter-status="Pendiente" aria-pressed="false" onclick="filtrarPanel('Pendiente')">
+                            <span>Pendientes</span>
+                            <h2 id="totalPendientes">0</h2>
+                        </button>
+                        <button type="button" class="card metric-card" data-filter-status="En camino" aria-pressed="false" onclick="filtrarPanel('En camino')">
+                            <span>En camino</span>
+                            <h2 id="totalCamino">0</h2>
+                        </button>
+                        <button type="button" class="card metric-card" data-filter-status="Entregado" aria-pressed="false" onclick="filtrarPanel('Entregado')">
+                            <span>Entregados</span>
+                            <h2 id="totalEntregados">0</h2>
+                        </button>
+                    </div>
+
+                    <div class="content-box orders-box">
+                        <div class="section-header">
+                            <div>
+                                <span class="eyebrow">RESUMEN DE PEDIDOS</span>
+                                <h3>Lista de pedidos</h3>
+                            </div>
+                            <button class="button-secondary" onclick="mostrarAdmin('pedidosAdmin')">Ver todos</button>
+                        </div>
+
+                        <div class="dashboard-filters">
+                            <label class="sr-only" for="buscarInicio">Buscar pedido, cliente, dirección o domiciliario</label>
+                            <input type="search" id="buscarInicio" placeholder="Buscar pedido, cliente o dirección..." oninput="actualizarTablaInicio()">
+                            <label class="sr-only" for="filtroEstadoInicio">Filtrar por estado</label>
+                            <select id="filtroEstadoInicio" onchange="actualizarTablaInicio()">
+                                <option value="Todos">Todos los estados</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="En camino">En camino</option>
+                                <option value="Entregado">Entregado</option>
+                            </select>
+                            <label class="sr-only" for="filtroAsignacionInicio">Filtrar por asignación</label>
+                            <select id="filtroAsignacionInicio" onchange="actualizarTablaInicio()">
+                                <option value="Todos">Todos</option>
+                                <option value="Sin asignar">Sin domiciliario</option>
+                                <option value="Sin asignar activos">Sin domiciliario (activos)</option>
+                                <option value="Asignado">Con domiciliario</option>
+                            </select>
+                        </div>
+                        <p id="resumenFiltroInicio" class="filter-summary" aria-live="polite"></p>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Pedido</th>
+                                        <th>Día</th>
+                                        <th>Cliente</th>
+                                        <th>Dirección</th>
+                                        <th>Domiciliario</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaInicio"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="map-card" aria-label="Vista ilustrativa de rutas de domicilios">
+                    <div class="map-heading">
+                        <div>
+                            <span class="eyebrow">VISTA GENERAL</span>
+                            <h3>Mapa de domicilios</h3>
+                        </div>
+                        <span class="map-live"><span></span> Mapa ilustrativo</span>
+                    </div>
+                    <div class="map-canvas">
+                        <svg class="map-art" viewBox="0 0 640 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                            <rect width="640" height="560" fill="#ecebe4"/>
+                            <path class="map-park" d="M398 0h242v156l-104 32-89-47zM0 350l113-34 74 66-39 178H0zM430 408l94-40 116 38v154H410z"/>
+                            <path class="map-water" d="M-20 174c105-17 153 38 242 14s142-55 240-28 122 22 198-1v29c-83 28-139-2-208-5s-148 45-231 45-145-32-241-20z"/>
+                            <g class="map-blocks">
+                                <path d="M37 34h96v66H37zM151 28h80v72h-80zM253 32h103v69H253zM38 116h96v40H38zM151 117h80v39h-80zM255 118h104v40H255z"/>
+                                <path d="M25 242h83v77H25zM124 243h108v77H124zM249 238h104v81H249zM375 225h87v91h-87zM478 215h110v98H478z"/>
+                                <path d="M220 359h103v73H220zM343 350h103v82H343zM468 337h120v93H468zM215 453h94v75h-94zM329 451h108v77H329z"/>
+                            </g>
+                            <g class="map-roads">
+                                <path d="M0 222h640M0 337h640M0 444h640M144 0v560M238 0v560M371 0v560M475 0v560M0 171h640M0 391h640"/>
+                                <path d="M0 105 640 483M30 560 608 0M0 300 640 45" class="map-small-road"/>
+                            </g>
+                            <g class="map-route">
+                                <path d="M99 282 183 282 183 376 288 376 288 284 402 284 402 377 531 377 531 263 445 263 445 137 329 137 329 225 220 225 220 282 99 282"/>
+                                <path d="M288 376v88h141"/>
+                            </g>
+                        </svg>
+                        <span class="map-label label-center">CENTRO</span>
+                        <span class="map-label label-north">ZONA NORTE</span>
+                        <span class="map-label label-south">ZONA SUR</span>
+                        <span class="map-pin pin-one" aria-label="Punto de entrega">⌖</span>
+                        <span class="map-pin pin-two" aria-label="Punto de entrega">⌖</span>
+                        <span class="map-pin pin-three" aria-label="Punto de entrega">⌖</span>
+                        <span class="map-pin pin-four" aria-label="Punto de entrega">⌖</span>
+                        <div class="map-legend"><span></span> Ruta de entrega</div>
+                        <div class="map-zoom" aria-hidden="true"><span>＋</span><span>−</span></div>
+                    </div>
+                    <p class="map-caption">Representación visual de las zonas de entrega. No corresponde a una ubicación GPS en tiempo real.</p>
+                </section>
+            </div>
+
+            <div class="content-box">
+                <h3>Carga del equipo</h3>
+                <p class="team-caption">Pedidos asignados que aún no se han entregado.</p>
+                <div id="disponibilidad"></div>
+            </div>
+        </div>
+
+        <!-- PEDIDOS -->
+        <div id="pedidosAdmin" class="admin-section hidden">
+            <div class="content-box">
+                <div class="section-header">
+                    <div>
+                        <span class="eyebrow">CENTRO DE OPERACIONES</span>
+                        <h3>Gestión de pedidos</h3>
+                        <p class="section-description">Busca, filtra y actualiza cada entrega en un solo lugar.</p>
+                    </div>
+                    <div class="section-actions">
+                        <span class="results-count" id="pedidosCount">0 pedidos</span>
+                        <button onclick="mostrarAdmin('registrarAdmin')">＋ Nuevo pedido</button>
+                    </div>
+                </div>
+
+                <div class="orders-toolbar">
+                    <div class="order-filters">
+                        <label class="sr-only" for="buscarPedido">Buscar pedido, cliente, teléfono, dirección o domiciliario</label>
+                        <input type="search" id="buscarPedido"
+                               placeholder="Buscar pedido, cliente, teléfono o dirección..."
+                               oninput="actualizarTablaPedidos()">
+                        <label class="sr-only" for="filtroEstadoPedidos">Filtrar por estado</label>
+                        <select id="filtroEstadoPedidos" onchange="actualizarTablaPedidos()">
+                            <option value="Todos">Todos los estados</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="En camino">En camino</option>
+                            <option value="Entregado">Entregado</option>
+                        </select>
+                        <label class="sr-only" for="filtroAsignacionPedidos">Filtrar por domiciliario asignado</label>
+                        <select id="filtroAsignacionPedidos" onchange="actualizarTablaPedidos()">
+                            <option value="Todos">Todos</option>
+                            <option value="Sin asignar">Sin domiciliario</option>
+                            <option value="Sin asignar activos">Sin domiciliario (activos)</option>
+                            <option value="Asignado">Con domiciliario</option>
+                        </select>
+                    </div>
+                    <div class="view-switch" role="group" aria-label="Vista de pedidos">
+                        <button type="button" class="view-switch-button active" data-order-view="table" aria-pressed="true" onclick="cambiarVistaPedidos('table', this)">
+                            <span aria-hidden="true">☷</span> Tabla
+                        </button>
+                        <button type="button" class="view-switch-button" data-order-view="board" aria-pressed="false" onclick="cambiarVistaPedidos('board', this)">
+                            <span aria-hidden="true">▥</span> Tablero
+                        </button>
+                    </div>
+                </div>
+
+                <div class="order-quick-filters" role="group" aria-label="Filtros rápidos de estado">
+                    <button type="button" class="quick-filter active" data-quick-status="Todos" aria-pressed="true" onclick="filtroRapidoPedidos('Todos', this)">Todos <span id="quickCountTodos">0</span></button>
+                    <button type="button" class="quick-filter" data-quick-status="Pendiente" aria-pressed="false" onclick="filtroRapidoPedidos('Pendiente', this)">Pendientes <span id="quickCountPendiente">0</span></button>
+                    <button type="button" class="quick-filter" data-quick-status="En camino" aria-pressed="false" onclick="filtroRapidoPedidos('En camino', this)">En camino <span id="quickCountCamino">0</span></button>
+                    <button type="button" class="quick-filter" data-quick-status="Entregado" aria-pressed="false" onclick="filtroRapidoPedidos('Entregado', this)">Entregados <span id="quickCountEntregado">0</span></button>
+                </div>
+
+                <div id="pedidosTableView" class="orders-view">
+                  <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Día del domicilio</th>
+                                <th>Salió el</th>
+                                <th>Entregado el</th>
+                                <th>Cliente</th>
+                                <th>Teléfono</th>
+                                <th>Dirección</th>
+                                <th>Valor</th>
+                                <th>Domiciliario</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaPedidos"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div id="pedidosBoardView" class="orders-view hidden">
+                    <div id="tableroPedidos" class="orders-board"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGISTRAR PEDIDO -->
+        <div id="registrarAdmin" class="admin-section hidden">
+            <div class="content-box">
+                <h3>Registrar nuevo pedido</h3>
+                <p class="form-hint">El día del domicilio se asigna automáticamente con la fecha de registro.</p>
+
+                <form id="pedidoForm" class="formulario">
+                    <div class="form-grid">
+                        <div>
+                            <label>Nombre del cliente</label>
+                            <input id="cliente" required>
+                        </div>
+
+                        <div>
+                            <label>Teléfono</label>
+                            <input id="telefono" required>
+                        </div>
+
+                        <div class="full">
+                            <label>Dirección de entrega</label>
+                            <input id="direccion" required>
+                        </div>
+
+                        <div>
+                            <label>Descripción del pedido</label>
+                            <input id="descripcion" required>
+                        </div>
+
+                        <div>
+                            <label>Valor del pedido</label>
+                            <input id="valor" type="number" min="0" required>
+                        </div>
+
+                        <div class="full">
+                            <label for="domiciliarioPedido">Asignar domiciliario</label>
+                            <select id="domiciliarioPedido">
+                                <option value="">Sin asignar por ahora</option>
+                            </select>
+                        </div>
+
+                        <div class="full">
+                            <label>Observaciones</label>
+                            <input id="observaciones" placeholder="Indicaciones adicionales">
+                        </div>
+                    </div>
+
+                    <button type="submit">Guardar pedido</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- DOMICILIARIOS -->
+        <div id="domiciliariosAdmin" class="admin-section hidden">
+            <div class="section-page-heading">
+                <div>
+                    <span class="eyebrow">GESTIÓN DEL EQUIPO</span>
+                    <h3>Tu equipo de domiciliarios</h3>
+                    <p>Administra disponibilidad y asignaciones de la operación.</p>
+                </div>
+            </div>
+            <div class="cards courier-summary-cards">
+                <div class="card"><span>Domiciliarios activos</span><h2 id="resumenDomiciliarios">0</h2></div>
+                <div class="card"><span>Disponibles</span><h2 id="resumenDisponibles">0</h2></div>
+                <div class="card"><span>En ruta</span><h2 id="resumenEnRuta">0</h2></div>
+            </div>
+            <div class="content-box">
+                <div class="section-header">
+                    <div><span class="eyebrow">NUEVO INTEGRANTE</span><h3>Agregar domiciliario</h3></div>
+                    <span class="form-step"><span>＋</span> Alta rápida</span>
+                </div>
+                <form id="domiciliarioForm" class="formulario">
+                    <div class="form-grid">
+                        <div>
+                            <label for="nombreDomiciliario">Nombre completo</label>
+                            <input id="nombreDomiciliario" required>
+                        </div>
+                        <div>
+                            <label for="correoDomiciliario">Correo electrónico</label>
+                            <input id="correoDomiciliario" type="email" required>
+                        </div>
+                        <div class="full">
+                            <label for="passwordDomiciliario">Contraseña</label>
+                            <input id="passwordDomiciliario" type="password" minlength="4" required>
+                        </div>
+                    </div>
+                    <button type="submit">Agregar domiciliario</button>
+                </form>
+            </div>
+
+            <div class="content-box">
+                <h3>Equipo de domiciliarios</h3>
+                <div id="listaDomiciliarios"></div>
+            </div>
+
+            <div class="content-box">
+                <h3>Pedidos por domiciliario</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Domiciliario</th>
+                                <th>Asignados</th>
+                                <th>En camino</th>
+                                <th>Entregados</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaRendimiento"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- REPORTES -->
+        <div id="reportesAdmin" class="admin-section hidden">
+            <div class="section-page-heading report-page-heading">
+                <div><span class="eyebrow">ANÁLISIS DE OPERACIÓN</span><h3>Reportes y rendimiento</h3><p>Consulta actividad diaria y productividad de tu equipo.</p></div>
+                <button type="button" class="button-secondary" onclick="exportarReporteDiario()">↓ Descargar CSV</button>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <span>Total de pedidos</span>
+                    <h2 id="reporteTotal">0</h2>
+                </div>
+                <div class="card">
+                    <span>Pendientes</span>
+                    <h2 id="reportePendientes">0</h2>
+                </div>
+                <div class="card">
+                    <span>En camino</span>
+                    <h2 id="reporteCamino">0</h2>
+                </div>
+                <div class="card">
+                    <span>Entregados</span>
+                    <h2 id="reporteEntregados">0</h2>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>Resumen de la operación</h3>
+                <div id="resumenReportes"></div>
+            </div>
+
+            <div class="content-box daily-report">
+                <div class="section-header daily-report-header">
+                    <div>
+                        <span class="eyebrow">RENDIMIENTO DIARIO</span>
+                        <h3>Domicilios por día</h3>
+                    </div>
+                    <div class="daily-date-control">
+                        <label for="fechaReporte">Consultar día</label>
+                        <input id="fechaReporte" type="date" onchange="actualizarReporteDiario()">
+                        <div class="date-shortcuts" role="group" aria-label="Fechas rápidas">
+                            <button type="button" class="date-shortcut active" data-date-shortcut="today" onclick="seleccionarFechaReporte('today', this)">Hoy</button>
+                            <button type="button" class="date-shortcut" data-date-shortcut="yesterday" onclick="seleccionarFechaReporte('yesterday', this)">Ayer</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="cards daily-cards">
+                    <div class="card">
+                        <span>Programados para el día</span>
+                        <h2 id="reporteDiarioProgramados">0</h2>
+                    </div>
+                    <div class="card">
+                        <span>Salieron a ruta</span>
+                        <h2 id="reporteDiarioSalieron">0</h2>
+                    </div>
+                    <div class="card">
+                        <span>Entregados ese día</span>
+                        <h2 id="reporteDiarioEntregados">0</h2>
+                    </div>
+                </div>
+                <h4>Actividad por domiciliario</h4>
+                <div class="table-container">
+                    <table class="daily-table">
+                        <thead>
+                            <tr>
+                                <th>Domiciliario</th>
+                                <th>Programados</th>
+                                <th>Salieron</th>
+                                <th>Entregados</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaReporteDiario"></tbody>
+                    </table>
+                </div>
+                <p class="daily-note">El día programado corresponde automáticamente al día de registro. “Salieron” se registra al cambiar un pedido a En camino y “Entregados” al marcarlo como Entregado.</p>
+            </div>
+
+            <div class="content-box">
+                <div class="section-header">
+                    <div>
+                        <span class="eyebrow">AGRUPACIÓN POR FECHA PROGRAMADA</span>
+                        <h3>Pedidos agrupados por día</h3>
+                    </div>
+                </div>
+                <div id="pedidosAgrupadosDia"></div>
+            </div>
+        </div>
+
+    </main>
+</section>
+
+<!-- PANEL DOMICILIARIO -->
+<section id="domiPanel" class="panel hidden">
+
+    <aside class="sidebar">
+        <div class="brand"><img src="assets/rutasmart-logo.png" alt=""> RutaSmart</div>
+        <p class="company-label">PANEL DE DOMICILIARIO</p>
+
+        <nav>
+            <button class="active" onclick="mostrarDomi('misPedidos',this)">▤ Mis pedidos</button>
+            <button onclick="mostrarDomi('historial',this)">▥ Historial</button>
+            <button onclick="mostrarDomi('perfil',this)">♙ Mi perfil</button>
+        </nav>
+
+        <button class="logout" onclick="cerrarSesion()">Cerrar sesión</button>
+    </aside>
+
+    <main class="main-content">
+        <header>
+            <div>
+                <span class="eyebrow">GESTIÓN DE ENTREGAS</span>
+                <h2>Panel del domiciliario</h2>
+            </div>
+            <div class="user-info">
+                <div class="avatar">D</div>
+                <span id="nombreDomi"></span>
+            </div>
+        </header>
+
+        <div id="misPedidos" class="domi-section">
+            <div class="welcome">
+                <h2>Mis pedidos asignados</h2>
+                <p>Consulta las entregas que han sido asignadas a tu usuario.</p>
+            </div>
+
+            <div class="cards">
+                <div class="card">
+                    <span>Pedidos pendientes</span>
+                    <h2 id="misPendientes">0</h2>
+                </div>
+                <div class="card">
+                    <span>En camino</span>
+                    <h2 id="misCamino">0</h2>
+                </div>
+                <div class="card">
+                    <span>Entregados</span>
+                    <h2 id="misEntregados">0</h2>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>Lista de entregas</h3>
+                <div id="listaMisPedidos"></div>
+            </div>
+        </div>
+
+        <div id="historial" class="domi-section hidden">
+            <div class="content-box">
+                <h3>Historial de entregas</h3>
+                <div id="listaHistorial"></div>
+            </div>
+        </div>
+
+        <div id="perfil" class="domi-section hidden">
+            <div class="content-box">
+                <h3>Mi información</h3>
+                <div id="datosPerfil"></div>
+            </div>
+        </div>
+
+    </main>
+</section>
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
